@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Socket.IO chat</title>
+</head>
+<body>
+
+<div id="YMapsID" style="width: 450px; height: 350px;"></div>
+
+<button id="btn">CLICK</button>
+<span>DATA: </span><p id="location">1111</p>
+
+<hr>
+
+<script src="https://api-maps.yandex.ru/2.1?apikey=9e4e983e-fe28-4b6f-9f85-585d88f4a4d4&load=package.full&lang=ru_RU">
+</script>
+<script type="text/javascript">
+
+    let latitude = 55.76;
+    let longitude = 37.64;
+    ymaps.ready(function () {
+        var myMap = new ymaps.Map("YMapsID", {
+            center: [latitude, longitude],
+            zoom: 10
+        });
+    });
+
+
+
+    function getLocations(){
+        const text = document.querySelector('#location')
+        text.textContent = ''
+
+        function successLocation(position) {
+            latitude = position.coords.latitude;
+            longitude = position.coords.longitude;
+
+            text.textContent = `${Math.floor(latitude)} - ${Math.floor(longitude)}`;
+
+        }
+
+        function errorLocation() {
+            text.textContent = 'Не удалось получить данные'
+        }
+
+        if(!navigator.geolocation) {
+            text.textContent = 'Браузер не поддерживает локацию'
+        } else {
+            navigator.geolocation.getCurrentPosition(successLocation, errorLocation)
+            ymaps.setCenter([latitude, longitude])
+        }
+
+    }
+
+    document.querySelector('#btn').addEventListener('click', getLocations)
+
+
+</script>
+
+
+<!--<script>-->
+<!--    function geoFindMe() {-->
+<!--        const status = document.querySelector("#status");-->
+<!--        const mapLink = document.querySelector("#map-link");-->
+
+<!--        mapLink.href = "";-->
+<!--        mapLink.textContent = "";-->
+
+<!--        function success(position) {-->
+<!--            const latitude = position.coords.latitude;-->
+<!--            const longitude = position.coords.longitude;-->
+
+<!--            status.textContent = "";-->
+<!--            mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;-->
+<!--            mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;-->
+<!--        }-->
+
+<!--        function error() {-->
+<!--            status.textContent = "Unable to retrieve your location";-->
+<!--        }-->
+
+<!--        if (!navigator.geolocation) {-->
+<!--            status.textContent = "Geolocation is not supported by your browser";-->
+<!--        } else {-->
+<!--            status.textContent = "Locating…";-->
+<!--            navigator.geolocation.getCurrentPosition(success, error);-->
+
+<!--        }-->
+<!--    }-->
+
+<!--    document.querySelector("#find-me").addEventListener("click", geoFindMe);-->
+<!--</script>-->
+</body>
+</html>
