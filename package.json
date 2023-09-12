@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./src/index.ts",
+    "start": "ts-node ./src/index.ts",
+    "dev": "nodemon ./src/index.ts",
     "build": "tsc --project ./tsconfig.json",
     "test": "jest -c ./jest.unit.json",
     "test:coverage": "jest --coverage -c ./jest.unit.json"
@@ -14,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
+    "handlebars": "^4.7.8",
     "socket.io": "^4.7.2"
   },
   "devDependencies": {
